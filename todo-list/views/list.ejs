@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Todo</title>
+  </head>
+  <body>
+    <h2>This is a simple app header...</h2>
+    <small>created by: <%= name %></small>
+
+    <button><%= btn %></button>
+    <div class="todo-form">
+      <form action="/" method="post">
+        <input type="text" name="todo" id="todo" placeholder="Add an item" />
+        <button type="submit">Add Item</button>
+      </form>
+    </div>
+    <div class="items-container">
+      <ul>
+        <li>html</li>
+        <li>CSS</li>
+        <li>Javascript</li>
+        <li>git</li>
+      </ul>
+    </div>
+  </body>
+</html>
