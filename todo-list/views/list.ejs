@@ -13,7 +13,12 @@
     <button><%= btn %></button>
     <div class="todo-form">
       <form action="/" method="post">
-        <input type="text" name="todo" id="todo" placeholder="Add an item" />
+        <input
+          type="text"
+          name="todo-item"
+          id="todo"
+          placeholder="Add an item"
+        />
         <button type="submit">Add Item</button>
       </form>
     </div>
@@ -23,6 +28,7 @@
         <li>CSS</li>
         <li>Javascript</li>
         <li>git</li>
+        <li><%= liItem %></li>
       </ul>
     </div>
   </body>

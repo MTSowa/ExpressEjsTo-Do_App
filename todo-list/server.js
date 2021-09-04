@@ -14,13 +14,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // })
 app.get('/', (req, res) => {
   // res.send('hello Express App..')
+  var inputData;
 
-  res.render('list', { name: 'mt@sowa', btn: 'Clickable button' });
+  res.render('list', {
+    name: 'mt@sowa',
+    btn: 'Clickable button',
+    liItem: inputData,
+  });
 });
 
 app.post('/', (req, res) => {
-  const inputData = req.body.todo;
-  console.log(`item posted.. ${inputData}`);
+  inputData = req.body.todo;
+
+  res.redirect('/');
 });
 
 app.listen(4000, function () {
