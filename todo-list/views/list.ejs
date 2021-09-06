@@ -13,22 +13,16 @@
     <button><%= btn %></button>
     <div class="todo-form">
       <form action="/" method="post">
-        <input
-          type="text"
-          name="todo-item"
-          id="todo"
-          placeholder="Add an item"
-        />
+        <input type="text"  name="todo" id="todo" placeholder="Add an item" />
         <button type="submit">Add Item</button>
       </form>
     </div>
     <div class="items-container">
       <ul>
-        <li>html</li>
-        <li>CSS</li>
-        <li>Javascript</li>
-        <li>git</li>
-        <li><%= liItem %></li>
+        <!-- <li><%= liItem %></li> -->
+        <% for(i=0; i<liItem.length;i++){ %>
+           <li><%=  liItem[i]  %></li>
+        <% } %>
       </ul>
     </div>
   </body>

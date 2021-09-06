@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 // the APP
 const app = express();
@@ -7,15 +7,15 @@ const app = express();
 // ejs
 app.set('view engine', 'ejs');
 // use body-parser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
-// app.get('/',(req,res)=>{
-//     res.send('hello Express App..')
-// })
+// %%%%%%%%%%%%%%%%%%%%%%%% VARIABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%
+var inputData = [];
+const todoItems = ['one', 'two', 'three'];
+
+// %%%%%%%%%%%%%%%%%%%%%%%% GET  REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.get('/', (req, res) => {
-  // res.send('hello Express App..')
-  var inputData;
-
   res.render('list', {
     name: 'mt@sowa',
     btn: 'Clickable button',
@@ -23,8 +23,10 @@ app.get('/', (req, res) => {
   });
 });
 
+// %%%%%%%%%%%%%%%%%%%%%%%% POST REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.post('/', (req, res) => {
-  inputData = req.body.todo;
+  const inpData = req.body.todo;
+  inputData = [...inputData, inpData];
 
   res.redirect('/');
 });
