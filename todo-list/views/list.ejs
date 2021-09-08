@@ -1,29 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Todo</title>
-  </head>
-  <body>
-    <h2>This is a simple app header...</h2>
-    <small>created by: <%= name %></small>
-
-    <button><%= btn %></button>
-    <div class="todo-form">
-      <form action="/" method="post">
-        <input type="text"  name="todo" id="todo" placeholder="Add an item" />
-        <button type="submit">Add Item</button>
+<%- include('header');  %> 
+    <div class="box" id="heading">
+      <h1>ToDo List Web Application</h1>
+      <h6><%= page %></h6>
+    </div>
+    <div class="box">
+      <form class="item" action="/" method="post">
+        <input
+          autocomplete="off"
+          type="text"
+          name="todo"
+          id="todo"
+          placeholder="Add item"
+        />
+        <button type="submit" name="list" value="<%= page %>">+</button>
       </form>
+      <div class="items-container">
+        <% liItem.forEach((item)=>{ %>
+        <div class="item"><p><%= item %></p></div>
+        <% }) %>
+        <!-- form -->
+      </div>
     </div>
-    <div class="items-container">
-      <ul>
-        <!-- <li><%= liItem %></li> -->
-        <% for(i=0; i<liItem.length;i++){ %>
-           <li><%=  liItem[i]  %></li>
-        <% } %>
-      </ul>
-    </div>
-  </body>
-</html>
+ <%- include ('footer'); %> 
+ 
