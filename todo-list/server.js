@@ -12,8 +12,8 @@ app.use(express.static('public'));
 // app.use(express.json());
 
 // %%%%%%%%%%%%%%%%%%%%%%%%   VARIABLES   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-let inputData = ['one', 'two', 'three'];
-let todoItems = ['document stred', 'three contracts'];
+let inputData = [];
+let todoItems = [];
 
 // %%%%%%%%%%%%%%%%%%%%%%%% GET  REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.get('/', (req, res) => {
@@ -35,7 +35,10 @@ app.get('/about',(req,res)=>{
 // %%%%%%%%%%%%%%%%%%%%%%%% POST REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.post('/', (req, res) => {
   console.log(req.body);
-  if (req.body.list === 'work') {
+  if(req.body.todo === ''){
+    return;
+  }else{
+    if (req.body.list === 'work') {
     const inpDat = req.body.todo;
     todoItems = [...todoItems, inpDat];
 
@@ -45,6 +48,7 @@ app.post('/', (req, res) => {
     inputData = [...inputData, inpData];
 
     res.redirect('/');
+  }
   }
 });
 // app.post('/work', (req, res) => {
