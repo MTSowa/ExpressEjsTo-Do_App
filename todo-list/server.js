@@ -1,5 +1,6 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 // the APP
 const app = express();
@@ -58,6 +59,6 @@ app.post('/', (req, res) => {
 //   res.redirect('/work');
 // });
 
-app.listen(4009, function () {
+app.listen(4000, function () {
   console.log('the port is functional...');
 });
