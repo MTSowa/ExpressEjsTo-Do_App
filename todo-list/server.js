@@ -52,7 +52,6 @@ app.post('/', (req, res) => {
     const inpDat = req.body.todo;
     // insert....into DB
     workItem.create({name:inpDat},function(){
-      workItem.close()
       console.log(`${inpDat} added to collection...`)
     })
 
@@ -64,7 +63,6 @@ app.post('/', (req, res) => {
     const inpData = req.body.todo;
       // insert....into DB
     homeItem.create({name:inpData},function(){
-        homeItem.close();
         console.log(`${inpDat} added to collection...`)
       })
     // inputData = [...inputData, inpData]; @@@@
