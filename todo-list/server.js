@@ -1,6 +1,7 @@
+const { homeItem,workItem, mongoose } = require('./databaseConnection');
 const express = require('express');
 // const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 // the APP
 const app = express();
@@ -12,28 +13,36 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 // app.use(express.json());
 
+
 // %%%%%%%%%%%%%%%%%%%%%%%%   VARIABLES   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-let inputData = [];
-let todoItems = [];
+
 
 // %%%%%%%%%%%%%%%%%%%%%%%% GET  REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.get('/', (req, res) => {
-  res.render('list', {
-    page: 'home',
-    liItem: inputData,
-  });
+
+  homeItem.find({},(err,data)=>{
+    if(err){console.log(`ERROR : ${err}`)}else{
+      res.render('list', {page: 'home',liItem: data});
+    }
+  }) ; //finds all home docs and render them into the ejs template file
 });
+
 app.get('/work', (req, res) => {
-  res.render('list', {
-    page: 'work',
-    liItem: todoItems,
+  workItem.find({},(err,data)=>{
+    if(err){console.log(`ERROR : ${err}`)}else{
+      res.render('list', {page: 'work',liItem: data});
+    }
   });
 });
+
 app.get('/about',(req,res)=>{
   res.render('about');
 })
 
 // %%%%%%%%%%%%%%%%%%%%%%%% POST REQUESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 app.post('/', (req, res) => {
   console.log(req.body);
   if(req.body.todo === ''){
@@ -41,12 +50,24 @@ app.post('/', (req, res) => {
   }else{
     if (req.body.list === 'work') {
     const inpDat = req.body.todo;
-    todoItems = [...todoItems, inpDat];
+    // insert....into DB
+    workItem.create({name:inpDat},function(){
+      workItem.close()
+      console.log(`${inpDat} added to collection...`)
+    })
+
+    // 
+    // todoItems = [...todoItems, inpDat]; @@@@
 
     res.redirect('/work');
   } else {
     const inpData = req.body.todo;
-    inputData = [...inputData, inpData];
+      // insert....into DB
+    homeItem.create({name:inpData},function(){
+        homeItem.close();
+        console.log(`${inpDat} added to collection...`)
+      })
+    // inputData = [...inputData, inpData]; @@@@
 
     res.redirect('/');
   }
@@ -58,6 +79,37 @@ app.post('/', (req, res) => {
 
 //   res.redirect('/work');
 // });
+
+
+
+
+// // %%%%%%%%%%%%%%%%%%%%%%%%   DATABASE THINGS   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+//   // **database connection and creation...
+// mongoose.connect('mongodb://127.0.0.1:27017/todoListDB',{useNewURLParser:true});
+//   // **schema and collection creation..
+// const homeSchema = mongoose.Schema({
+//   name:String
+// })
+// const workSchema = mongoose.Schema({
+//   name:String
+// })
+
+// const homeItem = mongoose.model('homeItem',homeSchema)
+// const workItem = mongoose.model('workItem',workSchema)
+
+// const firstHomeItem = new homeItem({
+//   name:'second-Home'
+// })
+// const firstWorkItem = new workItem({
+//   name:'second-Work'
+// })
+
+// firstHomeItem.save()
+// firstWorkItem.save()
+
+
+// %%%%%%%%%%%%%%%%%%%%%%%% END  DATABASE THINGS   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 app.listen(4000, function () {
   console.log('the port is functional...');
