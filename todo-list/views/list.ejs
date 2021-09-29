@@ -12,11 +12,16 @@
           id="todo"
           placeholder="Add item"
         />
-        <button id="submit_btn" type="submit" name="list" value="<%= page %>">+</button>
+        <button id="submit_btn" class="submit_btn" type="submit" name="list" value="<%= page %>">+</button>
       </form>
       <div class="items-container">
         <% liItem.forEach((item)=>{ %>
-        <div class="item"><p><%= item.name %></p> <input class='dlt-btn' type='submit' value="delete" />  </div>
+          <form action="/delete" method="post">
+            <div class="item"><p>
+              <%= item.name %></p>
+              <input type="checkbox" onChange="this.form.submit()" class='dlt_btn' name='dlt_btn'  value="<%= item._id%>">
+            </div>
+          </form>
         <% }) %>
         <!-- form -->
       </div>

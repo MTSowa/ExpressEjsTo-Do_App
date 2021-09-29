@@ -52,21 +52,18 @@ app.post('/', (req, res) => {
     const inpDat = req.body.todo;
     // insert....into DB
     workItem.create({name:inpDat},function(){
-      console.log(`${inpDat} added to collection...`)
+      // console.log(`${inpDat} added to collection...`)
     })
-
     // 
     // todoItems = [...todoItems, inpDat]; @@@@
-
     res.redirect('/work');
   } else {
     const inpData = req.body.todo;
       // insert....into DB
     homeItem.create({name:inpData},function(){
-        console.log(`${inpDat} added to collection...`)
+        // console.log(`${inpDat} added to collection...`)
       })
     // inputData = [...inputData, inpData]; @@@@
-
     res.redirect('/');
   }
   }
@@ -77,6 +74,20 @@ app.post('/', (req, res) => {
 
 //   res.redirect('/work');
 // });
+app.post('/delete',(req,res)=>{
+  console.log(req.body)
+      // we delete the item
+      const dlt_btnID = req.body.dlt_btn;
+      workItem.findByIdAndRemove(dlt_btnID,(err)=>{
+        if(!err){
+          console.log('successfully deleted...')
+          res.redirect('/')
+        }
+      })
+
+  // we re-direct back to our currentPage
+  
+})
 
 
 
