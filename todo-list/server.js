@@ -51,42 +51,35 @@ app.post('/', (req, res) => {
     if (req.body.list === 'work') {
     const inpDat = req.body.todo;
     // insert....into DB
-    workItem.create({name:inpDat},function(){
-      // console.log(`${inpDat} added to collection...`)
-    })
-    // 
-    // todoItems = [...todoItems, inpDat]; @@@@
+    workItem.create({name:inpDat});
     res.redirect('/work');
   } else {
     const inpData = req.body.todo;
-      // insert....into DB
-    homeItem.create({name:inpData},function(){
-        // console.log(`${inpDat} added to collection...`)
-      })
-    // inputData = [...inputData, inpData]; @@@@
+    // insert....into DB
+    homeItem.create({name:inpData})
     res.redirect('/');
   }
   }
 });
-// app.post('/work', (req, res) => {
-//   const inpDat = req.body.todo;
-//   todoItems = [...todoItems, inpDat];
 
-//   res.redirect('/work');
-// });
 app.post('/delete',(req,res)=>{
-  console.log(req.body)
-      // we delete the item
-      const dlt_btnID = req.body.dlt_btn;
-      workItem.findByIdAndRemove(dlt_btnID,(err)=>{
-        if(!err){
-          console.log('successfully deleted...')
-          res.redirect('/')
-        }
-      })
+  if(req.body.page === 'home'){
+    homeItem.findByIdAndRemove(req.body.dlt_btnID.toString(),(err)=>{
+      if(!err){
+        console.log('successfully deleted..... ')
+        res.redirect('/')
+      }
+    })
+  }else if(req.body.page === "work"){
+    workItem.findByIdAndRemove(req.body.dlt_btnID.toString(),(err)=>{
+      if(!err){
+        console.log('successfully deleted..... ')
+        res.redirect('/work')
+      }
+    })
+  }
 
-  // we re-direct back to our currentPage
-  
+ 
 })
 
 
