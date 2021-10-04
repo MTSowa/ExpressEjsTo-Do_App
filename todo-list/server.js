@@ -41,7 +41,7 @@ app.get('/work', (req, res) => {
 
 //dynamic route parameters...
 app.get('/:customPage',(req,res)=>{
-  const customPagename = req.params.customPage;
+  const customPagename = _.capitalize(req.params.customPage);
 
   customItem.findOne({name:customPagename},(err,data)=>{
       if(!err){
