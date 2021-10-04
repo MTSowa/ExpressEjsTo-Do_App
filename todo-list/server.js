@@ -1,5 +1,7 @@
-const { homeItem,workItem, mongoose } = require('./databaseConnection');
+const { homeItem,workItem,customItem,sampleTodos, mongoose } = require('./databaseConnection');
 const express = require('express');
+const e = require('express');
+const _ = require('lodash')
 // const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');
 
@@ -35,6 +37,45 @@ app.get('/work', (req, res) => {
     }
   });
 });
+// let itt = ['one','two','three']
+
+//dynamic route parameters...
+app.get('/:customPage',(req,res)=>{
+  const customPagename = req.params.customPage;
+
+  customItem.findOne({name:customPagename},(err,data)=>{
+      if(!err){
+        if(!data){
+          console.log('list not found')
+          const customPage = new customItem({name:customPagename,todoItems:sampleTodos});
+          customPage.save();
+          res.redirect('/'+ customPagename)
+        }else{
+          // console.log('list already exists...')
+          res.render('list',{page:data.name,liItem:data.todoItems})
+        }
+      }
+  });
+
+  // customItem.find({name:customPagename})
+ //checking if the newly created todo page exists
+    
+  // }else{
+  //   const customPage = new customItem({name:customPagename,todoItems:sampleTodos});
+    // customPage.save();
+    //  customItem.find({},(err,data)=>{
+    //   console.log(data)
+    // })
+    // res.render(list,{page:customPagename,liItem:})
+  // }
+
+
+
+  // res.render('list',{page:page,liItem:['QWE','DESW']})
+
+
+  // res.send(req.params.customPage);
+})
 
 app.get('/about',(req,res)=>{
   res.render('about');
@@ -46,6 +87,7 @@ app.get('/about',(req,res)=>{
 app.post('/', (req, res) => {
   console.log(req.body);
   if(req.body.todo === ''){
+
     return;
   }else{
     if (req.body.list === 'work') {
@@ -53,11 +95,26 @@ app.post('/', (req, res) => {
     // insert....into DB
     workItem.create({name:inpDat});
     res.redirect('/work');
-  } else {
+  } else if(req.body.list === 'home'){
     const inpData = req.body.todo;
     // insert....into DB
     homeItem.create({name:inpData})
     res.redirect('/');
+  }else{
+    const customepagecr = req.body.list;
+    const addedtodo = req.body.todo; //The-typed
+
+    const todoitem4array = new homeItem({name:addedtodo}); //creating a todoItem
+
+    customItem.findOne({name:customepagecr},(err,data)=>{
+      if(!err){
+        console.log('error check successful...#NO ERRORS FOUND!!')
+        data.todoItems.push(todoitem4array);
+        data.save()
+        console.log('item was added to the '+customepagecr +' page array...')
+        res.redirect('/'+customepagecr)
+      }
+    })
   }
   }
 });
@@ -77,10 +134,15 @@ app.post('/delete',(req,res)=>{
         res.redirect('/work')
       }
     })
+  }else{
+    customItem.findOneAndUpdate({name:req.body.page},{$pull:{todoItems:{_id:req.body.dlt_btnID}}},(err,data)=>{
+      if(!err){ //if there is no error
+          res.redirect('/'+req.body.page)
+      }
+    })
   }
+});
 
- 
-})
 
 
 

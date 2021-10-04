@@ -19,7 +19,7 @@
           <form action="/delete" method="post">
             <div class="item">
               <p><%= item.name %></p>
-              <input type="text" class="pppp" name="page" value="<%= page %>" id="">
+              <input type="hidden" class="pppp" name="page" value="<%= page %>" id="">
               <input type="checkbox" onChange="this.form.submit()" class="dlt_btn"  name="dlt_btnID"      value="<%= item._id%>">
             </div>
           </form>
